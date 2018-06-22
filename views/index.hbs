@@ -1,0 +1,252 @@
+<div class="jumbotron">
+  <a type="button" class="btn btn-secondary float-right" id="logout" href="/users/logout">Log Out</a>
+  <a type="button" class="btn btn-secondary modalButton float-right text-white" data-toggle="modal" data-target="#loginModal" id="login">Login/Signup</a>
+  <div class="container d-flex justify-content-center">
+    <h1 class="display-4 title">{{title}}
+      <a id="add" style="margin-bottom:.5rem" class="btn btn-info modalButton" data-toggle="modal" data-target="#addRumModal">
+        <i class="fab fa-bitbucket fa-2x"></i>
+      </a>
+    </h1>
+  </div>
+</div>
+
+{{!-- rums in journal --}}
+<table id="rums-table" class="table table-hover my-5">
+  <thead>
+    <tr>
+      <th scope="col">Show</th>
+      <th scope="col">Name</th>
+      <th scope="col">Distillery</th>
+    </tr>
+  </thead>
+  <tbody id="rums-in-journal"></tbody>
+</table>
+{{!-- / rums in journal --}}
+
+{{!-- modal for showing a rum  --}}
+<div class="modal fade" id="showRumModal" tabindex="-1" role="dialog" aria-labelledby="showRumModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" id="show-rum"></div>
+  </div>
+</div>
+{{!-- / modal for showing a rum  --}}
+
+{{!-- modal for login/signup --}}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login/Signup</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/users/login" method="POST" id="login-form">
+          <div class="form-group col-6">
+            <label for="userName">User Name</label>
+            <input type="text" class="form-control" id="username" name="username" autofocus required>
+          </div>
+          <div class="form-group col-6">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-info" id="newUser">New User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- / modal for login/signup --}}
+
+{{!-- modal for editing a rum --}}
+<div class="modal fade" id="rumModal" tabindex="-1" role="dialog" aria-labelledby="rumModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rumModalLabel">Edit Rum</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="rum-modal-form"></form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="deleteRum" class="btn btn-danger">Delete Rum</button>
+        <button type="button" id="saveRum" class="btn btn-info">Save Rum</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- / modal for editing a rum --}}
+
+{{!-- modal for adding a rum --}}
+<div class="modal fade" id="addRumModal" tabindex="-1" role="dialog" aria-labelledby="addRumModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRumModalLabel">Add Rum</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="rum-form" method="POST" action="/add">
+          <div class="form-row col">
+            <div class="form-group col-sm">
+              <label for="rumName">*Rum Name</label>
+              <input type="text" class="form-control" id="rumName" name="rumName" required autofocus>
+            </div>
+            <div class="form-group col-sm">
+              <label for="distillery">*Distillery</label>
+              <input type="text" class="form-control" id="distillery" name="distillery" required>
+            </div>
+          </div>
+
+          <div class="form-row col">
+            <div class="form-group col-sm-4">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" id="country" name="country">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="style">Style</label>
+              <input type="text" class="form-control" id="style" name="style">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="age">Age</label>
+              <input type="text" class="form-control" id="age" name="age">
+            </div>
+          </div>
+
+          <div class="form-row col">
+            <div class="form-group col-sm">
+              <label for="rating">Rating</label>
+              <input type="text" class="form-control" id="rating" name="rating">
+            </div>
+            <div class="form-group col-sm">
+              <label for="location">Location</label>
+              <input type="text" class="form-control" id="location" name="location">
+            </div>
+            <div class="form-group col-sm">
+              <label for="price">Price</label>
+              <input type="text" class="form-control" id="price" name="price">
+            </div>
+          </div>
+          
+          <div class="form-group col-sm">
+            <label for="notes">Notes</label>
+            <textarea class="form-control" name="notes" id="notes" rows="3"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="addRum" class="btn btn-info">Add Rum</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- / modal for adding a rum --}}
+
+{{!-- template for displaying rums --}}
+<script id="rums-template" type="text/x-handlebars-template">
+  \{{#each rums}}
+    <tr>
+      <td>
+        <a id="\{{_id}}" class="btn btn-info modalButton" data-toggle="modal" data-target="#showRumModal">
+          <i class="fab fa-bitbucket"></i>
+        </a>
+      </td>
+      <td>\{{rumName}}</td>
+      <td>\{{distillery}}</td>
+    </tr>
+  \{{/each}}
+</script>
+{{!-- / template for displaying rums --}}
+
+{{!-- template for showing one rum  --}}
+<script id="show-rum-template" type="text/x-handlebars-template">
+  <div class="modal-header">
+    <h4 class="modal-title" id="showRumModalTitle">\{{rum.rumName}}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h6>Distillery: \{{rum.distillery}}</h6>
+    <p>Country: \{{rum.country}}</p>
+    <p>Style: \{{rum.style}}</p>
+    <p>Age: \{{rum.age}}</p>
+    <p>Price: \{{rum.price}}</p>
+    <p>Location: \{{rum.location}}</p>
+    <p>Rating: \{{rum.rating}}</p>
+    <p>Notes: \{{rum.notes}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-info modalButton" data-toggle="modal" data-target="#rumModal" id="\{{rum._id}}">Edit Rum</button>
+  </div>
+</script>
+{{!-- / template for showing one rum --}}
+
+{{!-- template for editing beer --}}
+<script id="rum-edit-template" type="text/x-handlebars-template">
+  <div class="form-row col">
+    <div class="form-group col-sm">
+      <label for="edit-rumName">Rum Name</label>
+      <input type="text" class="form-control" id="edit-rumName" name="edit-rumName" value="\{{rum.rumName}}">
+    </div>
+    <div class="form-group col-sm">
+      <label for="edit-distillery">Distillery</label>
+      <input type="text" class="form-control" id="edit-distillery" name="edit-distillery" value="\{{rum.distillery}}">
+    </div>
+  </div>
+
+  <div class="form-row col">
+    <div class="form-group col-sm-4">
+      <label for="edit-country">Country</label>
+      <input type="text" class="form-control" id="edit-country" name="edit-country" value="\{{rum.country}}">
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="edit-style">Style</label>
+      <input type="text" class="form-control" id="edit-style" name="edit-style" value="\{{rum.style}}">
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="edit-age">Age</label>
+      <input type="text" class="form-control" id="edit-age" name="edit-age" value="\{{rum.age}}">
+    </div>
+  </div>
+
+  <div class="form-row col">
+    <div class="form-group col-sm">
+      <label for="edit-rating">Rating</label>
+      <input type="text" class="form-control" id="edit-rating" name="edit-rating" value="\{{rum.rating}}">
+    </div>
+    <div class="form-group col-sm">
+      <label for="edit-location">Location</label>
+      <input type="text" class="form-control" id="edit-location" name="edit-location" value="\{{rum.location}}">
+    </div>
+    <div class="form-group col-sm">
+      <label for="edit-price">Price</label>
+      <input type="text" class="form-control" id="edit-price" name="edit-price" value="\{{rum.price}}">
+    </div>
+  </div>
+  
+  <div class="form-group col-sm">
+    <label for="edit-notes">Notes</label>
+    <textarea class="form-control" name="edit-notes" id="edit-notes" rows="3">\{{rum.notes}}</textarea>
+  </div>
+  <div class="form-group col-sm">
+    <label for="edit-rumId">rum Id</label>
+    <input type="text" name="" id="edit-rumId" value="\{{rum._id}}" readonly>
+  </div>
+</script>
+{{!-- / template for editing rum --}}
