@@ -43,7 +43,7 @@
     "gulp-livereload": "^4.0.1",
     "gulp-rename": "^1.2.3",
     "gulp-uglify": "^3.0.0",
-    "nodemon": "^1.17.5",
+    "nodemon": "^2.0.9",
     "pump": "^3.0.0",
     "uglify-es": "^3.3.9"
   }
